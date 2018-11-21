@@ -55,7 +55,7 @@ public class User extends CommonBaseModel{
       */
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    Set<Product> sales = new HashSet<>();
+    Set<Sale> sales = new HashSet<>();
 
 	public Perfil getPerfil() {
 		return perfil;
@@ -114,11 +114,11 @@ public class User extends CommonBaseModel{
 	}
 
 	@JsonIgnore
-	public Set<Product> getSales() {
+	public Set<Sale> getSales() {
 		return sales;
 	}
 
-	public void setSales(Set<Product> sales) {
+	public void setSales(Set<Sale> sales) {
 		this.sales = sales;
 	}
 

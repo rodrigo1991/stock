@@ -11,6 +11,6 @@ import com.rrivero.model.Branch;
  */
 
 @RepositoryRestResource
-public interface ProjectRepository extends JpaRepository<Branch, Long> {
+public interface ProjectRepository{
 
 }

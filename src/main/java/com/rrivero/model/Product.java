@@ -17,6 +17,10 @@ public class Product extends CommonBaseModel{
     @ManyToOne(optional = false)
     @JoinColumn(name = "branch_id")
     private Branch branch;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "sale_id")
+    private Sale sale;
 
     @NotBlank
     private String name;
@@ -26,9 +30,6 @@ public class Product extends CommonBaseModel{
     
     private double duration;
     
-    @ManyToMany(mappedBy = "tasks")
-    Set<User> users = new HashSet<>();
-
 	public Branch getProject() {
 		return branch;
 	}
@@ -61,13 +62,22 @@ public class Product extends CommonBaseModel{
 		this.duration = duration;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public Branch getBranch() {
+		return branch;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
+	public void setBranch(Branch branch) {
+		this.branch = branch;
 	}
+
+	public Sale getSale() {
+		return sale;
+	}
+
+	public void setSale(Sale sale) {
+		this.sale = sale;
+	}
+
 
    
 }

@@ -15,7 +15,11 @@ import java.util.Set;
 @Entity
 @Table(name = "sales")
 @JsonIgnoreProperties(value = {"created", "modified"}, allowGetters = true)
-public class Sale  extends CommonBaseModel{
+public class Sale extends CommonBaseModel{
+	
+	@ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @NotBlank
     private String name;
@@ -29,8 +33,8 @@ public class Sale  extends CommonBaseModel{
     @NotBlank
     private String description;
     
-    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
-    Set<Product> tasks = new HashSet<>();
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
+    Set<Product> products = new HashSet<>();
 
 	public String getName() {
 		return name;
@@ -65,12 +69,20 @@ public class Sale  extends CommonBaseModel{
 	}
 
 	@JsonIgnore
-	public Set<Product> getTasks() {
-		return tasks;
+	public Set<Product> getProducts() {
+		return products;
 	}
 
-	public void setTasks(Set<Product> tasks) {
-		this.tasks = tasks;
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
