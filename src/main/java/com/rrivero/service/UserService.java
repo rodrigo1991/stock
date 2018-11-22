@@ -10,7 +10,7 @@ import com.rrivero.model.User;
 
 public interface UserService {
 
-	List<User> getUsersByName	(String name,	PageRequest pageRequest);
+	Page<User> getUsersByName	(String name,	Pageable pageable);
 	Page<User> getUsersBySurname(String surname,Pageable pageable);
 
 }

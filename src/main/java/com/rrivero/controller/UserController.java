@@ -1,37 +1,59 @@
 package com.rrivero.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.rrivero.model.User;
-import com.rrivero.service.UserService;
+import com.rrivero.repository.UserRepository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.rest.webmvc.BasePathAwareController;
+import org.springframework.hateoas.Resource;
+import org.springframework.http.ResponseEntity;
 
-@RestController
+@BasePathAwareController
 public class UserController {
-
 	
 	@Autowired
-	private UserService userService;	
+	UserRepository userRepository;
+	
+	
+	@DeleteMapping("users/{id}")
+	public ResponseEntity<User> borrar(@PathVariable final long id) {
+		System.out.println("overriding delete "+id);
+		return null;
+	}
 
-    @RequestMapping(value = "/users/name/{name}", method = RequestMethod.GET)
-    public List<User> getUsersByName(@PathVariable("name") String name) {
-		return userService.getUsersByName(name, PageRequest.of(0, 2, new Sort(Direction.ASC, "name")));
+	
+	@PostMapping("users")
+	public ResponseEntity<Resource<User>> viewUser(@RequestBody User user) {
+	  System.out.println(user);
+	  return null;
 	}
-    //http://127.0.0.1:8080/users/surname/diaz?page=0&size=2&sort=name,desc
-    @RequestMapping(value = "/users/surname/{surname}", method = RequestMethod.GET)
-    public Page<User> getUsersBySurName(@PathVariable("surname") String surname, Pageable pageable) {
-    	
-    	return userService.getUsersBySurname(surname,pageable);
+	
+	
+	@GetMapping("users/login")
+	public ResponseEntity<User> login() {
+		System.out.println("login");
+		return null;
 	}
+	
+	@GetMapping("users/na/{id}")
+	public ResponseEntity<User> get(@PathVariable final long id) {
+		System.out.println("metodo propio "+id);
+		return null;
+	}
+	
+	
+	@GetMapping("users/propio/{propio}")
+	public ResponseEntity<User> propio(@PathVariable final String propio) {
+		System.out.println(propio);
+		return null;
+	}
+	
+
 }

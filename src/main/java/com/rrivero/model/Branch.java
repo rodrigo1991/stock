@@ -30,7 +30,7 @@ public class Branch  extends CommonBaseModel{
     private String description;
     
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
-    Set<Product> tasks = new HashSet<>();
+    Set<Product> product = new HashSet<>();
 
 	public String getName() {
 		return name;
@@ -65,12 +65,12 @@ public class Branch  extends CommonBaseModel{
 	}
 
 	@JsonIgnore
-	public Set<Product> getTasks() {
-		return tasks;
+	public Set<Product> getProduct() {
+		return product;
 	}
 
-	public void setTasks(Set<Product> tasks) {
-		this.tasks = tasks;
+	public void setProduct(Set<Product> product) {
+		this.product = product;
 	}
 
 }

@@ -39,10 +39,8 @@ public class User extends CommonBaseModel{
     @NotBlank
     private String address;
     
-    @NotBlank
     private double salary;
     
-    @NotBlank
     private LocalDate birthdate;
     
     /* patch
@@ -120,6 +118,29 @@ public class User extends CommonBaseModel{
 
 	public void setSales(Set<Sale> sales) {
 		this.sales = sales;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "User [perfil=" + perfil + ", name=" + name + ", surname=" + surname + ", username=" + username
+				+ ", password=" + password + ", cellphone=" + cellphone + ", address=" + address + ", salary=" + salary
+				+ ", birthdate=" + birthdate + ", sales=" + sales + "]";
 	}
 
 }

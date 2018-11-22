@@ -19,11 +19,11 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepository;
 
 	@Override
-	public List<User> getUsersByName(String name, PageRequest pageRequest) {
+	public Page<User> getUsersByName(String name, Pageable pageable) {
 		if (name.length() > 20 || name.length() < 1) {
-			return new ArrayList<User>();
+			return null;
 		} else {
-			return userRepository.findByName(name, pageRequest);
+			return userRepository.findByName(name, pageable);
 		}
 	}
 
