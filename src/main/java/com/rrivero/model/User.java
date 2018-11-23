@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.hateoas.Identifiable;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,8 +18,8 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @JsonIgnoreProperties(value = {"created", "modified"}, allowGetters = true)
-public class User extends CommonBaseModel{
-    
+public class User extends CommonBaseModel implements Serializable, Identifiable<Long> {
+	private static final long serialVersionUID = 7880531135730386493L;
     @ManyToOne(optional = false)
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
