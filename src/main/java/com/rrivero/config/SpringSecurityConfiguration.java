@@ -29,12 +29,18 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+//		http.csrf().disable()
+//				.antMatcher("/users").authorizeRequests().antMatchers(HttpMethod.POST).hasAnyRole("ADMIN")//
+//				.and().antMatcher("/users").authorizeRequests().antMatchers(HttpMethod.PUT).hasAnyRole("ADMIN")//
+//				.and().antMatcher("/**").authorizeRequests().antMatchers(HttpMethod.DELETE).denyAll()//
+//				.and().antMatcher("/users").authorizeRequests().antMatchers(HttpMethod.GET).permitAll()//
+//				.and().antMatcher("/**").authorizeRequests().anyRequest().authenticated()
+//				.and().httpBasic();
+		
 		http.csrf().disable()
-				.antMatcher("/users").authorizeRequests().antMatchers(HttpMethod.POST).hasAnyRole("ADMIN")//
-				.and().antMatcher("/users").authorizeRequests().antMatchers(HttpMethod.PUT).hasAnyRole("ADMIN")//
-				.and().antMatcher("/**").authorizeRequests().antMatchers(HttpMethod.DELETE).denyAll()//
-				.and().antMatcher("/users").authorizeRequests().antMatchers(HttpMethod.GET).permitAll()//
-				.and().antMatcher("/**").authorizeRequests().anyRequest().authenticated()
-				.and().httpBasic();
+		.antMatcher("/*").authorizeRequests().anyRequest().permitAll()
+		.and().httpBasic();
 	}
+	
+	
 }

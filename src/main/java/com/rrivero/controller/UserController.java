@@ -12,6 +12,8 @@ import org.springframework.hateoas.Identifiable;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -46,6 +48,27 @@ public class UserController {
 			resource.add(entityLinks.linkFor(Perfil.class).withRel("addToCart"));
 		}
 		resource.add(entityLinks.linkToSingleResource(user).withSelfRel());
+		
+		System.out.println("sobreescrito");
+		return ResponseEntity.ok(resource);
+	}
+	
+	
+	@PostMapping("/")
+	public ResponseEntity<Resource<User>> create(@RequestBody Resource<User> user) {
+		
+		System.out.println("ejecutando create");
+		
+		User usuario = userRepository.save(user.getContent());
+		Resource<User> resource = new Resource<User>(usuario);
+		if (hasExistingPerfil()) {
+			// Provide a link to an existing Perfil
+			resource.add(entityLinks.linkToSingleResource(retrieveExistingPerfil()).withRel("addToCart"));
+		} else {
+			// Provide a link to create a new Perfil
+			resource.add(entityLinks.linkFor(Perfil.class).withRel("addToCart"));
+		}
+		resource.add(entityLinks.linkToSingleResource(usuario).withSelfRel());
 		
 		System.out.println("sobreescrito");
 		return ResponseEntity.ok(resource);
