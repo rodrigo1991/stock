@@ -16,7 +16,8 @@ public class Sale extends CommonBaseModel{
     @JoinColumn(name = "user_id")
     private User user;
 	
-	@ManyToMany(cascade = { CascadeType.ALL })
+	//se quita comportamiento cascada, para que no me deje null los atributos de branches al actualizar con "branches": [{"id":1},{"id":2}]
+	@ManyToMany
     @JoinTable(
         name = "products_sales", 
         joinColumns = { @JoinColumn(name = "product_id") }, 
