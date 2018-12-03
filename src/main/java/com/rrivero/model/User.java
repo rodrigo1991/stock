@@ -1,16 +1,10 @@
 package com.rrivero.model;
-
-
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-
-import org.springframework.hateoas.Identifiable;
-
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,11 +12,18 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @JsonIgnoreProperties(value = {"created", "modified"}, allowGetters = true)
-public class User extends CommonBaseModel implements Serializable, Identifiable<Long> {
-	private static final long serialVersionUID = 7880531135730386493L;
+public class User extends CommonBaseModel {
+	
     @ManyToOne(optional = false)
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    Set<Sale> sales = new HashSet<>();
 
     @NotBlank
     private String name;
@@ -54,9 +55,6 @@ public class User extends CommonBaseModel implements Serializable, Identifiable<
  			]
  		}
       */
-    
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    Set<Sale> sales = new HashSet<>();
 
 	public Perfil getPerfil() {
 		return perfil;
@@ -139,11 +137,12 @@ public class User extends CommonBaseModel implements Serializable, Identifiable<
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "User [perfil=" + perfil + ", name=" + name + ", surname=" + surname + ", username=" + username
-				+ ", password=" + password + ", cellphone=" + cellphone + ", address=" + address + ", salary=" + salary
-				+ ", birthdate=" + birthdate + ", sales=" + sales + "]";
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
 	}
 
 }

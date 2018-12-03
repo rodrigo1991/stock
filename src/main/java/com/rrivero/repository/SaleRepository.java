@@ -2,15 +2,14 @@ package com.rrivero.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.rrivero.model.Product;
+import com.rrivero.model.Sale;
 
 /**
  * Created by rajeevkumarsingh on 27/06/17.
  */
 
-@RepositoryRestResource
-public interface TaskRepository extends JpaRepository<Product, Long> {
+public interface SaleRepository extends JpaRepository<Sale, Long> {
 
 }

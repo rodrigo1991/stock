@@ -1,8 +1,7 @@
 package com.rrivero.controller;
 
-import com.rrivero.model.User;
-import com.rrivero.model.User;
-import com.rrivero.repository.UserRepository;
+import com.rrivero.model.Sale;
+import com.rrivero.repository.SaleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,49 +18,49 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/sales")
+public class SaleController {
 
 	@Autowired
-	private UserRepository userRepository;
+	private SaleRepository saleRepository;
 	/**
-	 * Create a link to add an User to an existing Perfil or create a new Perfil when
-	 * the user views a specific User.
+	 * Create a link to add an Sale to an existing Perfil or create a new Perfil when
+	 * the sale views a specific Sale.
 	 * 
 	 * @param id
 	 * @return 
 	 * @return
 	 */
 	@GetMapping("/{id}")
-	public User getUser(@PathVariable Long id) {
+	public Sale getSale(@PathVariable Long id) {
 		
-		Optional<User> user = userRepository.findById(id);		
-		return user.get();
+		Optional<Sale> sale = saleRepository.findById(id);		
+		return sale.get();
 	}
 	
 	@GetMapping()
-	public Page<User> getUsers(Pageable pageable) {
+	public Page<Sale> getSales(Pageable pageable) {
 		
-		Page<User> users = userRepository.findAll(pageable);		
-		return users;
+		Page<Sale> sales = saleRepository.findAll(pageable);		
+		return sales;
 	}
 	
 	
 	@PutMapping("/{id}")
-	public User update(@RequestBody User user, @PathVariable long id) {
+	public Sale update(@RequestBody Sale sale, @PathVariable long id) {
 		
-		user.setId(id);	
-		User savedUser = userRepository.save(user);	
-		return savedUser;
+		sale.setId(id);	
+		Sale savedSale = saleRepository.save(sale);	
+		return savedSale;
 	}
 	
 	
 	@PostMapping()
-	public User create(@RequestBody User user) {
+	public Sale create(@RequestBody Sale sale) {
 		
 		System.out.println("ejecutando create");		
-		User usuario = userRepository.save(user);	
-		return usuario;
+		Sale savedSale = saleRepository.save(sale);	
+		return savedSale;
 	}
 	
 

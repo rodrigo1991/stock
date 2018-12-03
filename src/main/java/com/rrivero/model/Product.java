@@ -2,25 +2,35 @@ package com.rrivero.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "products")
 @JsonIgnoreProperties(value = {"created", "modified"}, allowGetters = true)
 public class Product extends CommonBaseModel{
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "branch_id")
-    private Branch branch;
+	
+	//se quita comportamiento cascada, para que no me deje null los atributos de branches al actualizar con "branches": [{"id":1},{"id":2}]
+	@ManyToMany
+	@JoinTable(
+	    name = "branches_products", 
+		joinColumns = { @JoinColumn(name = "product_id") }, 
+		inverseJoinColumns = { @JoinColumn(name = "branch_id") }
+	)	
+    private Set<Branch> branches;
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "sale_id")
-    private Sale sale;
+    @JoinColumn(name = "category_id")
+    private Category category;
+    
+    @ManyToMany(mappedBy = "products") 
+    private Set<Sale> sales;
 
     @NotBlank
     private String name;
@@ -28,15 +38,7 @@ public class Product extends CommonBaseModel{
     @NotBlank
     private String description;
     
-    private double duration;
-    
-	public Branch getProject() {
-		return branch;
-	}
-
-	public void setProject(Branch branch) {
-		this.branch = branch;
-	}
+    private double price;
 
 	public String getName() {
 		return name;
@@ -54,30 +56,38 @@ public class Product extends CommonBaseModel{
 		this.description = description;
 	}
 
-	public double getDuration() {
-		return duration;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setDuration(double duration) {
-		this.duration = duration;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
-	public Branch getBranch() {
-		return branch;
+	public Set<Branch> getBranches() {
+		return branches;
 	}
 
-	public void setBranch(Branch branch) {
-		this.branch = branch;
+	public void setBranches(Set<Branch> branches) {
+		this.branches = branches;
 	}
 
-	public Sale getSale() {
-		return sale;
+	@JsonIgnore
+	public Set<Sale> getSales() {
+		return sales;
 	}
 
-	public void setSale(Sale sale) {
-		this.sale = sale;
+	public void setSales(Set<Sale> sales) {
+		this.sales = sales;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
 
+	public void setCategory(Category category) {
+		this.category = category;
+	}
    
+	
 }

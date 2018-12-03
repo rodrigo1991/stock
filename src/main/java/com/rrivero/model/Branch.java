@@ -17,20 +17,16 @@ import java.util.Set;
 @JsonIgnoreProperties(value = {"created", "modified"}, allowGetters = true)
 public class Branch  extends CommonBaseModel{
 
-    @NotBlank
     private String name;
     
-    @NotBlank
     private String address;
     
-    @NotBlank
     private LocalDate opened;
 
-    @NotBlank
     private String description;
     
-    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
-    Set<Product> product = new HashSet<>();
+    @ManyToMany(mappedBy = "branches")
+    private Set<Product> products = new HashSet<>();
 
 	public String getName() {
 		return name;
@@ -65,12 +61,12 @@ public class Branch  extends CommonBaseModel{
 	}
 
 	@JsonIgnore
-	public Set<Product> getProduct() {
-		return product;
+	public Set<Product> getProducts() {
+		return products;
 	}
 
-	public void setProduct(Set<Product> product) {
-		this.product = product;
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 
 }

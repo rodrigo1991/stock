@@ -2,11 +2,13 @@ package com.rrivero.model;
 
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +24,7 @@ public class Perfil extends CommonBaseModel{
     private String description;
     
     @OneToMany(mappedBy = "perfil", cascade = CascadeType.ALL)
-    Set<User> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
 	public String getName() {
 		return name;
