@@ -2,9 +2,9 @@ package com.rrivero.model;
 
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -17,20 +17,12 @@ public class Product extends CommonBaseModel{
     
 	
 	//se quita comportamiento cascada, para que no me deje null los atributos de branches al actualizar con "branches": [{"id":1},{"id":2}]
-	@ManyToMany
-	@JoinTable(
-	    name = "branches_products", 
-		joinColumns = { @JoinColumn(name = "product_id") }, 
-		inverseJoinColumns = { @JoinColumn(name = "branch_id") }
-	)	
-    private Set<Branch> branches;
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<BranchProduct> branchesProducts = new HashSet<>();
     
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
     private Category category;
-    
-    @ManyToMany(mappedBy = "products") 
-    private Set<Sale> sales;
 
     @NotBlank
     private String name;
@@ -64,21 +56,12 @@ public class Product extends CommonBaseModel{
 		this.price = price;
 	}
 
-	public Set<Branch> getBranches() {
-		return branches;
+	public Set<BranchProduct> getBranchesProducts() {
+		return branchesProducts;
 	}
 
-	public void setBranches(Set<Branch> branches) {
-		this.branches = branches;
-	}
-
-	@JsonIgnore
-	public Set<Sale> getSales() {
-		return sales;
-	}
-
-	public void setSales(Set<Sale> sales) {
-		this.sales = sales;
+	public void setBranchesProducts(Set<BranchProduct> branchesProducts) {
+		this.branchesProducts = branchesProducts;
 	}
 
 	public Category getCategory() {

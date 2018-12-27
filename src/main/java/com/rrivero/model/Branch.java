@@ -24,8 +24,8 @@ public class Branch  extends CommonBaseModel{
 
     private String description;
     
-    @ManyToMany(mappedBy = "branches")
-    private Set<Product> products = new HashSet<>();
+    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
+    private Set<BranchProduct> branchesProducts = new HashSet<>();
 
 	public String getName() {
 		return name;
@@ -60,12 +60,12 @@ public class Branch  extends CommonBaseModel{
 	}
 
 	@JsonIgnore
-	public Set<Product> getProducts() {
-		return products;
+	public Set<BranchProduct> getBranchesProducts() {
+		return branchesProducts;
 	}
 
-	public void setProducts(Set<Product> products) {
-		this.products = products;
+	public void setBranchesProducts(Set<BranchProduct> branchesProducts) {
+		this.branchesProducts = branchesProducts;
 	}
 
 }
