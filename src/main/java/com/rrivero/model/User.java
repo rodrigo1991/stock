@@ -46,15 +46,6 @@ public class User extends CommonBaseModel {
     private double salary;
     
     private LocalDate birthdate;
-    
-    /* patch
- 	 *  {
- 			"sales":[
- 				"task/4",
- 				"task/5"
- 			]
- 		}
-      */
 
 	public Perfil getPerfil() {
 		return perfil;
