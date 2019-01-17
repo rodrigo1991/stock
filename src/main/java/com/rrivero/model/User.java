@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,12 +18,8 @@ public class User extends CommonBaseModel {
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "branch_id")
-    private Branch branch;
-    
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    Set<Sale> sales = new HashSet<>();
+    private Set<Assignment> assignments = new HashSet<>();
 
     @NotBlank
     private String name;
@@ -45,7 +41,9 @@ public class User extends CommonBaseModel {
     
     private double salary;
     
-    private LocalDate birthdate;
+    private Timestamp birthdate;
+    
+    private boolean active;
 
 	public Perfil getPerfil() {
 		return perfil;
@@ -53,6 +51,14 @@ public class User extends CommonBaseModel {
 
 	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
+	}
+
+	public Set<Assignment> getAssignments() {
+		return assignments;
+	}
+	@JsonIgnore
+	public void setAssignments(Set<Assignment> assignments) {
+		this.assignments = assignments;
 	}
 
 	public String getName() {
@@ -69,6 +75,22 @@ public class User extends CommonBaseModel {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getCellphone() {
@@ -95,45 +117,21 @@ public class User extends CommonBaseModel {
 		this.salary = salary;
 	}
 
-	public LocalDate getBirthdate() {
+	public Timestamp getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(LocalDate birthdate) {
+	public void setBirthdate(Timestamp birthdate) {
 		this.birthdate = birthdate;
 	}
 
-	@JsonIgnore
-	public Set<Sale> getSales() {
-		return sales;
+	public boolean isActive() {
+		return active;
 	}
 
-	public void setSales(Set<Sale> sales) {
-		this.sales = sales;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Branch getBranch() {
-		return branch;
-	}
-
-	public void setBranch(Branch branch) {
-		this.branch = branch;
-	}
 
 }
