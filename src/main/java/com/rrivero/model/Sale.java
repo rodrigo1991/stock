@@ -1,8 +1,4 @@
 package com.rrivero.model;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Sale extends CommonBaseModel{
 	
 	@ManyToOne(optional = false)
-    @JoinColumn(name = "branchProduct_id")
-    private BranchProduct branchProduct;
+    @JoinColumn(name = "assignment_id")
+    private Assignment assignment;
 	
 	
 }

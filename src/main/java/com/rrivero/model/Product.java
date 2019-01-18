@@ -16,7 +16,6 @@ import javax.validation.constraints.NotBlank;
 public class Product extends CommonBaseModel{
     
 	
-	//se quita comportamiento cascada, para que no me deje null los atributos de branches al actualizar con "branches": [{"id":1},{"id":2}]
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<BranchProduct> branchesProducts = new HashSet<>();
     
@@ -31,6 +30,8 @@ public class Product extends CommonBaseModel{
     private String description;
     
     private double price;
+    
+    private String barcode;
 
 	public String getName() {
 		return name;
@@ -70,6 +71,14 @@ public class Product extends CommonBaseModel{
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
    
 	
