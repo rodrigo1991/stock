@@ -42,14 +42,6 @@ public class PerfilController {
 		return perfil.get();
 	}	
 	
-	@GetMapping("/{id}/users")
-	public Page<User> getUsersByPerfil(@PathVariable Long id, Pageable pageable) {
-		
-		Page<User> users = userRepository.findByPerfilId(id, pageable);		
-		return users;
-	}	
-	
-	
 	@GetMapping()
 	public Page<Perfil> getPerfil(Pageable pageable) {
 		

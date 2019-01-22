@@ -6,11 +6,7 @@ package com.rrivero.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "perfils")
@@ -23,9 +19,6 @@ public class Perfil extends CommonBaseModel{
     @NotBlank
     private String description;
     
-    @OneToMany(mappedBy = "perfil", cascade = CascadeType.ALL)
-    private Set<User> users = new HashSet<>();
-
 	public String getName() {
 		return name;
 	}
@@ -40,14 +33,5 @@ public class Perfil extends CommonBaseModel{
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	@JsonIgnore
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
 	}
 }
