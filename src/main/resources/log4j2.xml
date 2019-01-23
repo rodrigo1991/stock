@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+		<Property name="LOG_PATTERN">
+			%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex
+		</Property>
+		<Property name="PATTERN">			
+			%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n
+		</Property>
+		<Property name="FILE">
+			/tmp/stock.log
+		</Property>
+	</Properties>
+	<Appenders>
+		<Console name="ConsoleAppender" target="SYSTEM_OUT"	follow="true">
+			<PatternLayout pattern="${PATTERN}" />
+		</Console>
+		<File name="FileAppender" fileName="${FILE}">
+			<PatternLayout pattern="${PATTERN}" />
+		</File>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="org.hibernate.SQL" level="DEBUG"></Logger>
+		<Logger name="org.hibernate.type.descriptor.sql" level="ERROR"></Logger>
+		<Logger name="org.hibernate" level="ERROR"></Logger>
+		<Logger name="org.springframework.web" level="ERROR"></Logger>
+		<Root level="info">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="FileAppender" />
+		</Root>
+	</Loggers>
+</Configuration>
