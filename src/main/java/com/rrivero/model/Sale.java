@@ -1,11 +1,12 @@
 package com.rrivero.model;
-import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "sales")
-@JsonIgnoreProperties(value = {"created", "modified"}, allowGetters = true)
 public class Sale extends CommonBaseModel{
 	
 	@ManyToOne(optional = false)

@@ -1,20 +1,12 @@
 package com.rrivero.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.*;
-
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 @Entity
 @Table(name = "branchesProducts")
-@JsonIgnoreProperties(value = { "created", "modified" }, allowGetters = true)
 public class BranchProduct extends CommonBaseModel {
-
-	@OneToMany(mappedBy = "branchProduct", cascade = CascadeType.ALL)
-	private Set<SaleDetail> saleDetails = new HashSet<>();
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "branch_id")
@@ -25,16 +17,6 @@ public class BranchProduct extends CommonBaseModel {
 	private Product product;
 
 	private int quantity;
-	
-	
-	public Set<SaleDetail> getSaleDetails() {
-		return saleDetails;
-	}
-	
-	@JsonIgnore
-	public void setSaleDetails(Set<SaleDetail> saleDetails) {
-		this.saleDetails = saleDetails;
-	}
 
 	public Branch getBranch() {
 		return branch;

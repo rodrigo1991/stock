@@ -15,43 +15,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
-	/**
-	 * Create a link to add an Category to an existing Perfil or create a new Perfil when
-	 * the category views a specific Category.
-	 * 
-	 * @param id
-	 * @return 
-	 * @return
-	 */
+
 	@GetMapping("/{id}")
 	public Category getCategory(@PathVariable Long id) {
-		
-		Optional<Category> category = categoryRepository.findById(id);		
+
+		Optional<Category> category = categoryRepository.findById(id);
 		return category.get();
 	}
-	
+
 	@GetMapping()
 	public Page<Category> getCategories(Pageable pageable) {
-		
-		Page<Category> categories = categoryRepository.findAll(pageable);		
+
+		Page<Category> categories = categoryRepository.findAll(pageable);
 		return categories;
 	}
-	
-	
+
 	@PostMapping()
 	public Category create(@RequestBody Category category) {
-		
-		System.out.println("ejecutando create");		
-		Category usuario = categoryRepository.save(category);	
+
+		System.out.println("ejecutando create");
+		Category usuario = categoryRepository.save(category);
 		return usuario;
 	}
-	
 
 }

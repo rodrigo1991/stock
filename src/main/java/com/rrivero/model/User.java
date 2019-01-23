@@ -1,9 +1,9 @@
 package com.rrivero.model;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -11,15 +11,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@JsonIgnoreProperties(value = {"created", "modified"}, allowGetters = true)
 public class User extends CommonBaseModel {
 	
     @ManyToOne(optional = false)
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
-    
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Assignment> assignments = new HashSet<>();
 
     @NotBlank
     private String name;
@@ -52,15 +48,6 @@ public class User extends CommonBaseModel {
 	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
 	}
-
-	public Set<Assignment> getAssignments() {
-		return assignments;
-	}
-	@JsonIgnore
-	public void setAssignments(Set<Assignment> assignments) {
-		this.assignments = assignments;
-	}
-
 	public String getName() {
 		return name;
 	}

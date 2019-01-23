@@ -3,14 +3,10 @@ package com.rrivero.model;
 
 
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import javax.persistence.Entity;
+import javax.persistence.Table;import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "perfils")
-@JsonIgnoreProperties(value = {"created", "modified"}, allowGetters = true)
 public class Perfil extends CommonBaseModel{
 
     @NotBlank

@@ -1,9 +1,8 @@
 package com.rrivero.controller;
 
+import com.rrivero.exception.ResourceNotFoundException;
 import com.rrivero.model.Perfil;
-import com.rrivero.model.User;
 import com.rrivero.repository.PerfilRepository;
-import com.rrivero.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
-
 @RestController
 @RequestMapping("/perfils")
 public class PerfilController {
@@ -25,21 +21,11 @@ public class PerfilController {
 	@Autowired
 	private PerfilRepository perfilRepository;
 	
-	@Autowired
-	private UserRepository userRepository;
-	/**
-	 * Create a link to add an Perfil to an existing Perfil or create a new Perfil when
-	 * the perfil views a specific Perfil.
-	 * 
-	 * @param id
-	 * @return 
-	 * @return
-	 */
 	@GetMapping("/{id}")
 	public Perfil getPerfil(@PathVariable Long id) {
 		
-		Optional<Perfil> perfil = perfilRepository.findById(id);		
-		return perfil.get();
+		return this.perfilRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Perfil " + id + " not found"));	
 	}	
 	
 	@GetMapping()
@@ -52,8 +38,6 @@ public class PerfilController {
 	
 	@PostMapping()
 	public Perfil create(@RequestBody Perfil perfil) {
-		
-		System.out.println("ejecutando create");		
 		Perfil usuario = perfilRepository.save(perfil);	
 		return usuario;
 	}

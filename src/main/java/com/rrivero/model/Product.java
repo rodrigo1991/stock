@@ -4,20 +4,16 @@ package com.rrivero.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "products")
 @JsonIgnoreProperties(value = {"created", "modified"}, allowGetters = true)
 public class Product extends CommonBaseModel{
-    
-	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<BranchProduct> branchesProducts = new HashSet<>();
     
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
@@ -55,14 +51,6 @@ public class Product extends CommonBaseModel{
 
 	public void setPrice(double price) {
 		this.price = price;
-	}
-
-	public Set<BranchProduct> getBranchesProducts() {
-		return branchesProducts;
-	}
-
-	public void setBranchesProducts(Set<BranchProduct> branchesProducts) {
-		this.branchesProducts = branchesProducts;
 	}
 
 	public Category getCategory() {

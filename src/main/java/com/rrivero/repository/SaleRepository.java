@@ -3,7 +3,6 @@ package com.rrivero.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.rrivero.model.Product;
 import com.rrivero.model.Sale;
 
 /**
