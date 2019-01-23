@@ -13,14 +13,9 @@ import com.rrivero.model.Assignment;
 public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 	
 
-	@EntityGraph(attributePaths = {"user","branch"})
+	@EntityGraph(attributePaths = {"user","user.perfil","branch"})
 	Page<Assignment>findAll(Pageable pageable);
-	Page<Assignment>findByName(@Param("name")String name, Pageable pageable);
-	Page<Assignment> findBySurname(@Param("surname")String surname, Pageable pageable);
-	@EntityGraph(attributePaths = {"user","branch"})
-	Page<Assignment> findByPerfilId(Long id, Pageable pageable);
-	@EntityGraph(attributePaths = {"user","branch"})
-	Page<Assignment> findByIdAndPerfilId(Long id, Long perfilId, Pageable pageable);
+	@EntityGraph(attributePaths = {"user","user.perfil","branch"})
 	Page<Assignment> findByUserId(Long userId, Pageable pageable);
 
 }
