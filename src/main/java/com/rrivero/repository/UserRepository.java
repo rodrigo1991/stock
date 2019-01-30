@@ -15,11 +15,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@EntityGraph(attributePaths = "perfil")
 	Page<User>findAll(Pageable pageable);
+	
 	Page<User>findByName(@Param("name")String name, Pageable pageable);
+	
 	Page<User> findBySurname(@Param("surname")String surname, Pageable pageable);
+	
 	@EntityGraph(attributePaths = "perfil")
-	Page<User> findByPerfilId(Long id, Pageable pageable);
+	Page<User> findByPerfilId(@Param("perfilId")Long perfilId, Pageable pageable);
+	
 	@EntityGraph(attributePaths = "perfil")
-	Page<User> findByIdAndPerfilId(Long id, Long perfilId, Pageable pageable);
+	Page<User> findByIdAndPerfilId(@Param("id")Long id, @Param("perfilId")Long perfilId, Pageable pageable);
 
 }

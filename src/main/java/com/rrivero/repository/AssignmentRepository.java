@@ -15,7 +15,14 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 
 	@EntityGraph(attributePaths = {"user","user.perfil","branch"})
 	Page<Assignment>findAll(Pageable pageable);
+	
 	@EntityGraph(attributePaths = {"user","user.perfil","branch"})
-	Page<Assignment> findByUserId(Long userId, Pageable pageable);
+	Page<Assignment> findByUserId(@Param("userId")Long userId, Pageable pageable);
+	
+	@EntityGraph(attributePaths = {"user","user.perfil","branch"})
+	Page<Assignment> findByBranchId(@Param("branchId")Long branchId, Pageable pageable);
+
+	@EntityGraph(attributePaths = {"user","user.perfil","branch"})
+	Page<Assignment> findByUserIdAndBranchId(@Param("userId")Long userId, @Param("branchId")Long branchId, Pageable pageable);
 
 }

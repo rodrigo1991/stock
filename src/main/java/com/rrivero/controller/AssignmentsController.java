@@ -25,8 +25,6 @@ public class AssignmentsController {
 	@Autowired
 	private AssignmentRepository assignmentRepository;
 
-	@Autowired
-	private UserRepository userRepository;
 	
 	@GetMapping("/assignments")
 	public Page<Assignment> getAllAssignments(Pageable pageable) {
@@ -37,31 +35,6 @@ public class AssignmentsController {
 	public Assignment getAssignmentById(@PathVariable Long id, Pageable pageable) {
 		return this.assignmentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Assignment " + id + " not found"));		
 		
-	}
-
-	@GetMapping("/users/{userId}/assignments")
-	public Page<Assignment> getAllAssignmentsByUserId(@PathVariable(value = "userId") Long userId, Pageable pageable) {
-		return this.assignmentRepository.findByUserId(userId, pageable);
-	}
-
-	@PostMapping("/users/{userId}/assignments")
-	public Assignment createAssignment(@PathVariable(value = "userId") Long userId, @Valid @RequestBody Assignment assignment) {
-		return userRepository.findById(userId).map(user -> {
-			assignment.setUser(user);
-			return this.assignmentRepository.save(assignment);
-		}).orElseThrow(() -> new ResourceNotFoundException("UserId " + userId + " not found"));
-	}
-
-	@PutMapping("/users/{userId}/assignments/{id}")
-	public Assignment updateAssignment(@PathVariable Long userId,	@PathVariable Long id, @Valid @RequestBody Assignment assignmentRequest) {
-		if (!userRepository.existsById(userId)) {
-			throw new ResourceNotFoundException("UserId " + userId + " not found");
-		}
-
-		return this.assignmentRepository.findById(id).map(assignment -> {
-			assignment.setUser(assignmentRequest.getUser());
-			return this.assignmentRepository.save(assignment);
-		}).orElseThrow(() -> new ResourceNotFoundException("AssignmentId " + id + "not found"));
 	}
 
 	

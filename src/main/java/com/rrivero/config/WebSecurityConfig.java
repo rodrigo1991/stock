@@ -74,9 +74,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Control de proceso").description("API de control de proceso")
-				.termsOfServiceUrl("Terms of Service").contact(new Contact("Rodrigo", "", "ro.rivero1991@gmail.com"))
-				.license("License").licenseUrl("License Url").version("1.0").build();
+		return new ApiInfoBuilder().title("Control de proceso").description("API de control de Stock")
+				.termsOfServiceUrl("terminosdeservicio").contact(new Contact("Rodrigo", "", "ro.rivero1991@gmail.com"))
+				.license("Licencia").licenseUrl("copyright").version("1.0").build();
 	}
 
 	private ApiKey apiKey() {
