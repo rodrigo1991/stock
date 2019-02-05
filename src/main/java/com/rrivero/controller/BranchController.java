@@ -5,6 +5,7 @@ import com.rrivero.model.Branch;
 import com.rrivero.model.Assignment;
 import com.rrivero.repository.AssignmentRepository;
 import com.rrivero.repository.BranchRepository;
+import com.rrivero.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,9 @@ public class BranchController {
 	
 	@Autowired
 	private AssignmentRepository assignmentRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@GetMapping("/{id}")
 	public Branch getBranch(@PathVariable Long id) {
@@ -52,32 +56,32 @@ public class BranchController {
 		return this.assignmentRepository.findByBranchId(branchId, pageable);
 	}
 
-	@PostMapping("/{branchId}/assignments")
-	public Assignment createAssignment(@PathVariable Long branchId, @Valid @RequestBody Assignment assignment) {
-		return branchRepository.findById(branchId).map(branch -> {
-			assignment.setBranch(branch);
-			return this.assignmentRepository.save(assignment);
-		}).orElseThrow(() -> new ResourceNotFoundException("BranchId " + branchId + " not found"));
-	}
-
-	/*
-	@PutMapping("/{branchId}/assignments/{id}")
-	public Assignment updateAssignment(@PathVariable Long branchId,	@PathVariable Long id, @Valid @RequestBody Assignment assignmentRequest) {
-		if (!branchRepository.existsById(branchId)) {
-			throw new ResourceNotFoundException("BranchId " + branchId + " not found");
-		}
-
-		return this.assignmentRepository.findById(id).map(assignment -> {
-			assignment.setName(assignmentRequest.getName());
-			return this.assignmentRepository.save(assignment);
-		}).orElseThrow(() -> new ResourceNotFoundException("AssignmentId " + id + "not found"));
-	}
-	*/
 
 	@PostMapping()
 	public ResponseEntity<Branch> create(@RequestBody Branch branch) {
 		Branch savedBranch = branchRepository.save(branch);
 		return new ResponseEntity<Branch>(savedBranch, HttpStatus.CREATED);
+	}
+	
+	
+	@GetMapping("/{branchId}/assignments/users/{userId}")
+	public Page<Assignment> getAllAssignmentsByUserIdAndBranchId(@PathVariable Long branchId, @PathVariable Long userId, Pageable pageable) {
+		return this.assignmentRepository.findByBranchIdAndUserId(branchId, userId , pageable);
+	}
+	
+	@PostMapping("/{branchId}/assignments/users/{userId}")
+	public ResponseEntity<Assignment> createAssignments(@PathVariable Long branchId, @PathVariable Long userId, @Valid @RequestBody Assignment assignment) {
+		return this.userRepository.findById(userId).map(user -> {
+			assignment.setUser(user);
+			
+			this.branchRepository.findById(branchId).map(branch -> {
+				assignment.setBranch(branch);				
+				return this.assignmentRepository.save(assignment);
+			}).orElseThrow(() -> new ResourceNotFoundException("branchId " + branchId + " not found"));
+			
+			Assignment savedAssignment = this.assignmentRepository.save(assignment);
+			return new ResponseEntity<Assignment>(savedAssignment, HttpStatus.CREATED);
+		}).orElseThrow(() -> new ResourceNotFoundException("userId " + userId + " not found"));
 	}
 
 }

@@ -6,8 +6,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")

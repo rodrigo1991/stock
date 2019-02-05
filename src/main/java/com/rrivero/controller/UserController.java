@@ -2,8 +2,10 @@ package com.rrivero.controller;
 
 import com.rrivero.exception.ResourceNotFoundException;
 import com.rrivero.model.Assignment;
+import com.rrivero.model.Perfil;
 import com.rrivero.model.User;
 import com.rrivero.repository.AssignmentRepository;
+import com.rrivero.repository.BranchRepository;
 import com.rrivero.repository.UserRepository;
 
 import javax.validation.Valid;
@@ -11,6 +13,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +33,10 @@ public class UserController {
 	@Autowired
 	private AssignmentRepository assignmentRepository;
 	
-	@GetMapping("")
+	@Autowired
+	private BranchRepository branchRepository;
+	
+	@GetMapping()
 	public Page<User> getAllUsers(Pageable pageable) {
 		return this.userRepository.findAll(pageable);
 	}
@@ -59,13 +65,19 @@ public class UserController {
 	public Page<Assignment> getAllAssignmentsByUserIdAndBranchId(@PathVariable Long userId, @PathVariable Long branchId, Pageable pageable) {
 		return this.assignmentRepository.findByUserIdAndBranchId(userId, branchId, pageable);
 	}
-
-	@PostMapping("/{userId}/assignments")
-	public Assignment createAssignment(@PathVariable Long userId, @Valid @RequestBody Assignment assignment) {
+	
+	@PostMapping("/{userId}/assignments/branches/{branchId}")
+	public ResponseEntity<Assignment> createAssignments(@PathVariable Long userId, @PathVariable Long branchId, @Valid @RequestBody Assignment assignment) {
 		return this.userRepository.findById(userId).map(user -> {
 			assignment.setUser(user);
-			return this.assignmentRepository.save(assignment);
+			
+			this.branchRepository.findById(branchId).map(branch -> {
+				assignment.setBranch(branch);				
+				return this.assignmentRepository.save(assignment);
+			}).orElseThrow(() -> new ResourceNotFoundException("branchId " + branchId + " not found"));
+			
+			Assignment savedAssignment = this.assignmentRepository.save(assignment);
+			return new ResponseEntity<Assignment>(savedAssignment, HttpStatus.CREATED);
 		}).orElseThrow(() -> new ResourceNotFoundException("userId " + userId + " not found"));
 	}
-    
 }

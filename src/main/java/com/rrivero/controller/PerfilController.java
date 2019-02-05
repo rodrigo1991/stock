@@ -78,5 +78,14 @@ public class PerfilController {
 		return new ResponseEntity<Perfil>(savedPerfil, HttpStatus.CREATED);
 	}
 	
+	/**
+	 * Student savedStudent = studentRepository.save(student);
+
+	URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+			.buildAndExpand(savedStudent.getId()).toUri();
+
+	return ResponseEntity.created(location).build();
+	 */
+	
 
 }
